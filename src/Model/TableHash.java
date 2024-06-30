@@ -6,14 +6,25 @@ package Model;
  */
 public class TableHash {
     
-    private Nodo[] table;
-    private int capacity;
+    private final Nodo[] table;
+    private final int capacity;
     
+    /**
+     * Create a new TableHash
+     *
+     * @param capacity
+     */
     public TableHash(int capacity) {
         this.capacity = capacity;
         table = new Nodo[capacity];
     }
     
+    /**
+     * Function hash
+     *
+     * @param key the word which will be searched
+     * @return value of hash
+     */
     public int hashing1(String key) {
         int hash = 0;
         for (int i = 0; i < key.length(); i++) {
