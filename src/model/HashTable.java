@@ -2,11 +2,11 @@ package model;
 
 /**
  * A HashTable implementation, it uses separate chaining technique to handle
- * collisions and FNV-1 hashing algorithm to generate hashcodes with high
+ * collisions and FNV-1 hashing algorithm to generate hashcodes with higher
  * dispersion. It has an average O(1) complexity for search, insert, and remove
  * operations.
  *
- * @author Jesús Duarte & Arístides Pérez
+ * @author Arístides Pérez
  * @param <K> key datatype
  * @param <V> value datatype
  */
@@ -54,32 +54,52 @@ public class HashTable<K, V> {
 
     /**
      * Just a {@code put} public method util. It's used when it's performing a
-     * rehashing.
+     * rehashing. Also, return value doesn't mean anything, it's just useful
+     * when there is a key that has already been hashed to not increase the
+     * size.
      *
      * @param key key to insert
      * @param value value to insert
      * @param hash hashCode if it exists
-     * @throws NullPointerException if key is {@code nulñ}
+     * @throws NullPointerException if key is {@code null}
+     * @see #get(K)
      * @see #rehash()
      */
-    private void put(K key, V value, int hash) {
+    private boolean put(K key, V value, int hash) {
         if (key == null) {
             throw new NullPointerException("Key cannot be a null value");
         }
 
         hash = hash == 0 ? hashCode32(key) : hash;
         int index = hash % buckets;
-        Node<K, V> newNode = new Node<>(key, value, hash);
 
+        // POSSIBLE COLLISION
         if (table[index] != null) {
-            Node aux = table[index];
 
-            while (aux.getNext() != null) {
-                aux = aux.getNext();
+            // FIRST KEY ALREADY EXISTS
+            if (table[index].getKey().equals(key)) {
+                table[index].setValue(value);
+                return true;
+
+            } else {
+                Node aux = table[index].getNext();
+                Node prev = table[index];
+
+                // MIDDLE-LAST KEY ALREADY EXISTS
+                while (aux != null) {
+                    if (aux.getKey().equals(key)) {
+                        aux.setValue(value);
+                        return true;
+                    }
+                    prev = aux;
+                    aux = aux.getNext();
+                }
+
+                // KEY DOESN'T EXIST
+                prev.setNext(new Node<>(key, value, hash));
             }
-            aux.setNext(newNode);
         } else {
-            table[index] = newNode;
+            table[index] = new Node<>(key, value, hash);
         }
 
         size++;
@@ -88,27 +108,75 @@ public class HashTable<K, V> {
             rehash();
         }
 
+        return false;
     }
 
     /**
-     * Get a value from a specified key if it's hashed, otherwise it will return
+     * Get a value from a given key if it's hashed, otherwise it will return
      * {@code null}. There is a possibility that the key is already hashed, but
      * its value pair is {@code null}.
      *
-     * @param key
+     * @param key key to get value pair
      * @return value from key-value pair, if it isn't hashed returns
      * {@code null}
+     * @throws NullPointerException if key is {@code null}
      * @see #put(K, V)
      */
     public V get(K key) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be a null value");
+        }
+
         int index = hashCode32(key) % buckets;
         Node<K, V> node = table[index];
 
         while (node != null) {
-            if (node.getKey().toString().equals(key)) {
+            if (node.getKey().equals(key)) {
                 return node.getValue();
             }
             node = node.getNext();
+        }
+
+        return null;
+    }
+
+    /**
+     * Remove a value from a given if it's hashed, otherwise it will return
+     * {@code null}. It can return null even if the key is hashed but it's value
+     * pair is {@code null}
+     *
+     * @param key key to remove key-value pair
+     * @throws NullPointerException if key is {@code null}
+     * @return value from removed key
+     * @see #put(K, V)
+     */
+    public V remove(K key) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be a null value");
+        }
+
+        int index = hashCode32(key) % buckets;
+        Node<K, V> node = table[index];
+
+        // FIRST CASE
+        if (node != null && node.getKey().equals(key)) {
+            table[index] = node.getNext();
+            return node.getValue();
+        }
+
+        // ELSE CASE
+        if (node != null) {
+            Node prev = node;
+            node = node.getNext();
+            while (node != null) {
+                if (node.getKey().equals(key)) {
+                    prev.setNext(node.getNext());
+                    return node.getValue();
+                }
+
+                prev = node;
+                node = node.getNext();
+            }
         }
 
         return null;
