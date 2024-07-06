@@ -5,51 +5,51 @@ package model;
  * if there is a collision
  *
  * @author Jesús Duarte & Arístides Pérez
- * @param <T> key datatype
- * @param <U> value datatype
+ * @param <K> key datatype
+ * @param <V> value datatype
  */
-class Node<T, U> {
-    private T key;
-    private U value;
-    private Node<T, U> next;
+class Node<K, V> {
+    private K key;
+    private V value;
+    private Node<K, V> next;
     private int hashCode;
 
-    protected Node(T key, U value, int hashCode) {
+    protected Node(K key, V value, int hashCode) {
         this.key = key;
         this.value = value;
         this.next = null;
         this.hashCode = hashCode;
     }
 
-    public T getKey() {
+    public K getKey() {
         return key;
     }
 
-    public void setKey(T key) {
+    protected void setKey(K key) {
         this.key = key;
     }
 
-    public U getValue() {
+    public V getValue() {
         return value;
     }
 
-    public void setValue(U value) {
+    protected void setValue(V value) {
         this.value = value;
     }
 
-    public Node getNext() {
+    protected Node getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    protected void setNext(Node next) {
         this.next = next;
     }
 
-    public int getHashCode() {
+    protected int getHashCode() {
         return hashCode;
     }
 
-    public void setHashCode(int hashCode) {
+    protected void setHashCode(int hashCode) {
         this.hashCode = hashCode;
     }
 

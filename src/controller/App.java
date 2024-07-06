@@ -1,6 +1,6 @@
 package controller;
 
-import View.FileSelector;
+import view.FileSelector;
 import model.HashTable;
 import model.Summary;
 

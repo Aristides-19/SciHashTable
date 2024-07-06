@@ -7,22 +7,31 @@ package model;
  * operations.
  *
  * @author Jesús Duarte & Arístides Pérez
- * @param <T> key datatype
- * @param <U> value datatype
+ * @param <K> key datatype
+ * @param <V> value datatype
  */
-public class HashTable<T, U> {
+public class HashTable<K, V> {
 
-    private Node<T, U>[] table;
+    private Node<K, V>[] table;
     private int buckets;
     private int size;
-    private final float loadFactor = 0.75F;
+    private final float LOAD_FACTOR = 0.75F;
 
     /**
-     * Buckets value must be a power of two.
+     * Buckets value must be a power of two or greater than 2 to minimize
+     * collisions.
      *
      * @param buckets capacity
+     * @throws IllegalArgumentException if buckets argument is not a power of
+     * two or is less or equal than 2
      */
     public HashTable(int buckets) {
+
+        double kVal = Math.log((double) buckets) / Math.log(2);
+        if (Math.floor(kVal) != kVal || buckets <= 2) {
+            throw new IllegalArgumentException("Buckets capacity value must be a power of two or greater than 2");
+        }
+
         this.buckets = buckets;
         this.size = 0;
         this.table = new Node[buckets];
@@ -31,27 +40,36 @@ public class HashTable<T, U> {
     /**
      * It inserts a key-value pair to the table, if the size reachs 75% of
      * buckets capacity, it performs a rehashing for every element. So, in the
-     * worst case complexity will be O(n), otherwise, it will be O(1)
+     * worst case complexity will be O(n), otherwise, it will be O(1). Even so,
+     * the value can be {@code null}.
      *
      * @param key key to insert
      * @param value value to insert with key pair
+     * @throws NullPointerException if key is null
+     * @see #get(K)
      */
-    public void put(T key, U value) {
+    public void put(K key, V value) {
         put(key, value, 0);
     }
 
     /**
-     * Just a 'put' public method util. It's used when it's performing a
+     * Just a {@code put} public method util. It's used when it's performing a
      * rehashing.
      *
      * @param key key to insert
      * @param value value to insert
      * @param hash hashCode if it exists
+     * @throws NullPointerException if key is {@code nulñ}
+     * @see #rehash()
      */
-    private void put(T key, U value, int hash) {
-        hash = hash == 0 ? hashCode(key) : hash;
+    private void put(K key, V value, int hash) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be a null value");
+        }
+
+        hash = hash == 0 ? hashCode32(key) : hash;
         int index = hash % buckets;
-        Node<T, U> newNode = new Node<>(key, value, hash);
+        Node<K, V> newNode = new Node<>(key, value, hash);
 
         if (table[index] != null) {
             Node aux = table[index];
@@ -66,21 +84,45 @@ public class HashTable<T, U> {
 
         size++;
 
-        if ((float) size / buckets == loadFactor) {
+        if ((float) size / buckets == LOAD_FACTOR) {
             rehash();
         }
 
     }
 
     /**
-     * This implementation uses the FNV-1 hashing algorithm. It uses 'T' object
-     * toString method, then is converted to its byte-per-byte representation (8
-     * bits), instead of using 16 bits char. Complexity O(n)
-       *
-     * @param key object to hash
-     * @return 'T' object hashCode
+     * Get a value from a specified key if it's hashed, otherwise it will return
+     * {@code null}. There is a possibility that the key is already hashed, but
+     * its value pair is {@code null}.
+     *
+     * @param key
+     * @return value from key-value pair, if it isn't hashed returns
+     * {@code null}
+     * @see #put(K, V)
      */
-    private int hashCode(T key) {
+    public V get(K key) {
+        int index = hashCode32(key) % buckets;
+        Node<K, V> node = table[index];
+
+        while (node != null) {
+            if (node.getKey().toString().equals(key)) {
+                return node.getValue();
+            }
+            node = node.getNext();
+        }
+
+        return null;
+    }
+
+    /**
+     * This implementation uses the FNV-1 hashing algorithm with 32 bits. It
+     * uses key object     * toString method, then is converted to its byte-per-byte representation (8
+     * bits), instead of using 16 bits char. Complexity O(n)
+     *
+     * @param key object to hash
+     * @return key object hashCode
+     */
+    private int hashCode32(K key) {
         byte[] keyBytes = key.toString().getBytes(); // to iterate for-each byte (8 bits)
         int FNV_PRIME = 0x01000193; // FNV Prime 32 bits
         int hash = 0x811C9DC5; // offset-basis 32 bits
@@ -101,7 +143,7 @@ public class HashTable<T, U> {
      */
     private void rehash() {
         buckets *= 2;
-        Node<T, U>[] oldTable = table;
+        Node<K, V>[] oldTable = table;
         table = new Node[buckets];
 
         for (var e : oldTable) {
@@ -129,6 +171,15 @@ public class HashTable<T, U> {
      */
     public int getSize() {
         return size;
+    }
+
+    /**
+     * To acknowledge if the hashTable is empty or not.
+     *
+     * @return boolean value representing whether is empty or not
+     */
+    public boolean isEmpty() {
+        return size == 0;
     }
 
 }
