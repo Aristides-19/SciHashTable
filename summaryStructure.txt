@@ -1,8 +1,8 @@
-// NOTE-1 : If something is before the "/title" tag or it is a whitespace, the program will not read the line.
+// NOTE-1 : If something is before the "/title" tag or it is a whitespace line, the program will not read the line.
 
-// NOTE-2 : In "/body", there will be a space to the end of each line.
+// NOTE-2 : In "/body", there will be a whitespace to the end of each line.
 // Example: FirstLine.- para los -- SecondLine.- ingenieros
-//          ResultWithNoSpace.- para losingenieros / FinalResult.- para los ingenieros
+//          ResultWithNoWhiteSpace.- para losingenieros / FinalResult.- para los ingenieros
 
 // NOTE-3 : Keywords and Authors must not be enumerated, but it must be separated line by line.
 

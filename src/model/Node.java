@@ -12,13 +12,13 @@ class Node<T, U> {
     private T key;
     private U value;
     private Node next;
-    private int hashCode;
+    private int position;
 
-    protected Node(T key, U value, int hashCode) {
+    protected Node(T key, U value, int position) {
         this.key = key;
         this.value = value;
         this.next = null;
-        this.hashCode = hashCode;
+        this.position = position;
     }
 
     public T getKey() {
@@ -45,12 +45,12 @@ class Node<T, U> {
         this.next = next;
     }
 
-    public int getHashCode() {
-        return hashCode;
+    public int getPosition() {
+        return position;
     }
 
-    public void setHashCode(int hashCode) {
-        this.hashCode = hashCode;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     

@@ -20,28 +20,30 @@ public class HashTable<T, U> {
         this.table = new Node[buckets];
     }
 
-    /**
-     * Function hash
-     *
-     * @param key the word which will be searched
-     * @return value of hash
-     */
-    private int hashing1(String key) {
-        int hash = 0;
-        for (int i = 0; i < key.length(); i++) {
-            hash += (key.charAt(i) * Math.pow(29, key.length() - (i + 1)));
-        }
-        hash = hash % buckets;
-        return hash;
+    public void put(T key, U value) {
+        int hash = hashCode(key) % buckets;
+        Node<T, U> newNode = new Node(key, value, hash);
+        // ...
     }
 
-    private int hashing2(String key) {
-        String[] letter = key.split("");
-        int hash = 0;
-        for (int i = 0; i < letter.length; i++) {
-            hash += (i + 1) * (Math.pow(29, ((letter.length) >> 1) - 1));
+    /**
+     * This implementation uses the FNV-1 hashing algorithm. It uses 'T' object
+     * toString method, then is converted to its byte-per-byte representation (8
+     * bits), instead of using chars of 16 bits.
+       *
+     * @param key object to hash
+     * @return 'T' object hashCode
+     */
+    private int hashCode(T key) {
+        byte[] keyBytes = key.toString().getBytes(); // to iterate for-each byte (8 bits)
+        int FNV_PRIME = 0x01000193; // FNV Prime 32 bits
+        int hash = 0x811C9DC5; // offset-basis 32 bits
+
+        for (byte b : keyBytes) {
+            hash *= FNV_PRIME;
+            hash ^= b; // XOR to increase dispersion
         }
-        hash = hash % buckets;
+
         return hash;
     }
 

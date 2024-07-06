@@ -1,8 +1,8 @@
 package model;
 
 /**
- * Summary template, it needs a title, authors, body and keyWords from the
- * summary
+ * Summary template, it needs a title and body String with keyWords and authors
+ * String array
  *
  * @author Jesús Duarte & Arístides Pérez
  */
@@ -35,20 +35,20 @@ public class Summary {
         this.authors = authors;
     }
 
-    public String getSummary() {
+    public String getBody() {
         return body;
     }
 
-    public void setSummary(String summary) {
-        this.body = summary;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public String[] getKeys() {
+    public String[] getKeyWords() {
         return keyWords;
     }
 
-    public void setKeys(String[] keys) {
-        this.keyWords = keys;
+    public void setKeyWords(String[] keyWords) {
+        this.keyWords = keyWords;
     }
     
     
