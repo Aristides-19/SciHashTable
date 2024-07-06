@@ -11,14 +11,14 @@ package model;
 class Node<T, U> {
     private T key;
     private U value;
-    private Node next;
-    private int position;
+    private Node<T, U> next;
+    private int hashCode;
 
-    protected Node(T key, U value, int position) {
+    protected Node(T key, U value, int hashCode) {
         this.key = key;
         this.value = value;
         this.next = null;
-        this.position = position;
+        this.hashCode = hashCode;
     }
 
     public T getKey() {
@@ -45,12 +45,12 @@ class Node<T, U> {
         this.next = next;
     }
 
-    public int getPosition() {
-        return position;
+    public int getHashCode() {
+        return hashCode;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setHashCode(int hashCode) {
+        this.hashCode = hashCode;
     }
 
     

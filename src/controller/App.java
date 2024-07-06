@@ -1,7 +1,8 @@
-package Controler;
+package controller;
 
 import View.FileSelector;
 import model.HashTable;
+import model.Summary;
 
 /**
  *
@@ -9,10 +10,9 @@ import model.HashTable;
  */
 public class App {
     
-    private HashTable titleTable = new HashTable (16);
-    private HashTable keysTable = new HashTable (16);
-    private HashTable authorsTable = new HashTable (16);
-    private static double msTime;
+    private HashTable<String, Summary> summaries = new HashTable<>(16);
+    private HashTable<String, Summary> keyWords = new HashTable<>(16);
+    private HashTable<String, Summary> authors = new HashTable<>(16);
 
     /**
      * @param args the command line arguments
