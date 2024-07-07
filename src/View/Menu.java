@@ -1,6 +1,13 @@
 package view;
 
+import controller.App;
 import java.awt.Frame;
+import java.io.File;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Main Menu where the user can interact with the scientific summaries
@@ -9,6 +16,7 @@ import java.awt.Frame;
  */
 public class Menu extends javax.swing.JFrame {
 
+    private final DefaultListModel<String> summariesTitleModel = new DefaultListModel<>();
 
     /**
      * Creates new form Menu
@@ -18,6 +26,14 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+
+        // Summaries View Initialization
+        Object[] titles = App.getSummaries().keysToArray();
+        for (var title : titles) {
+            summariesTitleModel.addElement(title.toString());
+        }
+        summariesTitleList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        summariesTitleList.setSelectedIndex(0);
     }
 
     /**
@@ -36,6 +52,7 @@ public class Menu extends javax.swing.JFrame {
         helpButton = new javax.swing.JLabel();
         pathSep = new javax.swing.JSeparator();
         pathField = new javax.swing.JTextField();
+        fileChoose = new javax.swing.JButton();
         summaryAddButton = new javax.swing.JButton();
         keyWordSearchButton = new javax.swing.JButton();
         keyWordField = new javax.swing.JTextField();
@@ -43,7 +60,7 @@ public class Menu extends javax.swing.JFrame {
         authorSearchButton = new javax.swing.JButton();
         analizeSummaryButton = new javax.swing.JButton();
         scrollSummaries = new javax.swing.JScrollPane();
-        summariesList = new javax.swing.JList<>();
+        summariesTitleList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -132,7 +149,20 @@ public class Menu extends javax.swing.JFrame {
                 pathFieldKeyTyped(evt);
             }
         });
-        Main.add(pathField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 260, 20));
+        Main.add(pathField, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 220, 20));
+
+        fileChoose.setBackground(new java.awt.Color(0, 51, 153));
+        fileChoose.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        fileChoose.setForeground(new java.awt.Color(255, 255, 255));
+        fileChoose.setText("...");
+        fileChoose.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fileChoose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fileChoose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileChooseActionPerformed(evt);
+            }
+        });
+        Main.add(fileChoose, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 240, 30, 20));
 
         summaryAddButton.setBackground(new java.awt.Color(0, 51, 153));
         summaryAddButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -205,8 +235,8 @@ public class Menu extends javax.swing.JFrame {
         });
         Main.add(analizeSummaryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 260, 30));
 
-        summariesList.setModel(dictionaryModel);
-        scrollSummaries.setViewportView(summariesList);
+        summariesTitleList.setModel(summariesTitleModel);
+        scrollSummaries.setViewportView(summariesTitleList);
 
         Main.add(scrollSummaries, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 260, 200));
 
@@ -233,7 +263,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void pathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathFieldActionPerformed
-
+        summaryAddButtonActionPerformed(evt);
     }//GEN-LAST:event_pathFieldActionPerformed
 
     private void pathFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pathFieldKeyTyped
@@ -243,7 +273,20 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_pathFieldKeyTyped
 
     private void summaryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_summaryAddButtonActionPerformed
+        boolean success = App.addSummaries(pathField.getText().split(" "));
 
+        if (success) {
+            Object[] titles = App.getSummaries().keysToArray();
+            for (var title : titles) {
+                if (!summariesTitleModel.contains(title.toString())) {
+                    summariesTitleModel.addElement(title.toString());
+                }
+            }
+            JOptionPane.showMessageDialog(this, "El resumen ha sido añadido con éxito");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo "
+                    + "no está vacío o la ruta y la estructura sea correcta");
+        }
     }//GEN-LAST:event_summaryAddButtonActionPerformed
 
     private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
@@ -266,18 +309,31 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_keyWordFieldKeyTyped
 
     private void authorSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorSearchButtonActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_authorSearchButtonActionPerformed
 
     private void analizeSummaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizeSummaryButtonActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_analizeSummaryButtonActionPerformed
+
+    private void fileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooseActionPerformed
+        JFileChooser jf = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de Texto (.txt)", "txt");
+        jf.setAcceptAllFileFilterUsed(false);
+        jf.addChoosableFileFilter(filter);
+
+        int result = jf.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            pathField.setText(jf.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_fileChooseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
     private javax.swing.JButton analizeSummaryButton;
     private javax.swing.JButton authorSearchButton;
     private javax.swing.JLabel exitButton;
+    private javax.swing.JButton fileChoose;
     private javax.swing.JLabel helpButton;
     private javax.swing.JTextField keyWordField;
     private javax.swing.JButton keyWordSearchButton;
@@ -286,7 +342,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JTextField pathField;
     private javax.swing.JSeparator pathSep;
     private javax.swing.JScrollPane scrollSummaries;
-    private javax.swing.JList<String> summariesList;
+    private javax.swing.JList<String> summariesTitleList;
     private javax.swing.JButton summaryAddButton;
     private javax.swing.JPanel titleBar;
     // End of variables declaration//GEN-END:variables

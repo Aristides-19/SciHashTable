@@ -266,16 +266,19 @@ public class HashTable<K, V> {
      * @return array of hashed keys
      */
     public K[] keysToArray() {
-        K[] keys = (K[]) new Object[size];
-        int i = 0;
-        for (var e : table) {
-            while (e != null) {
-                keys[i] = e.getKey();
-                e = e.getNext();
-                i++;
+        if (size > 0) {
+            K[] keys = (K[]) new Object[size];
+            int i = 0;
+            for (var e : table) {
+                while (e != null) {
+                    keys[i] = e.getKey();
+                    e = e.getNext();
+                    i++;
+                }
             }
+            return keys;
         }
-        return keys;
+        throw new IllegalStateException("The HashTable is Empty, cannot fill an array with keys");
     }
 
     /**
@@ -284,16 +287,19 @@ public class HashTable<K, V> {
      * @return array of values from key-value pairs
      */
     public V[] valuesToArray() {
-        V[] values = (V[]) new Object[size];
-        int i = 0;
-        for (var e : table) {
-            while (e != null) {
-                values[i] = e.getValue();
-                e = e.getNext();
-                i++;
+        if (size > 0) {
+            V[] values = (V[]) new Object[size];
+            int i = 0;
+            for (var e : table) {
+                while (e != null) {
+                    values[i] = e.getValue();
+                    e = e.getNext();
+                    i++;
+                }
             }
+            return values;
         }
-        return values;
+        throw new IllegalStateException("The HashTable is Empty, cannot fill an array with values");
     }
 
     /**

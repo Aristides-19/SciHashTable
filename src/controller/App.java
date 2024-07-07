@@ -12,9 +12,9 @@ import model.Summary;
  */
 public class App {
 
-    static private HashTable<String, Summary> summaries = new HashTable<>(16);
-    static private HashTable<String, LinkedList<Summary>> keyWords = new HashTable<>(16);
-    static private HashTable<String, LinkedList<Summary>> authors = new HashTable<>(16);
+    static private final HashTable<String, Summary> summaries = new HashTable<>(16);
+    static private final HashTable<String, LinkedList<Summary>> keyWords = new HashTable<>(16);
+    static private final HashTable<String, LinkedList<Summary>> authors = new HashTable<>(16);
 
     /**
      * @param args the command line arguments
@@ -92,4 +92,14 @@ public class App {
         }
         return false;
     }
+
+    /**
+     * Get the HashTable of Summaries
+     *
+     * @return hashtable {@code String-Summary} pair
+     */
+    public static HashTable<String, Summary> getSummaries() {
+        return summaries;
+    }
+
 }
