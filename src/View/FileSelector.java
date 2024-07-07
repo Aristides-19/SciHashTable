@@ -167,14 +167,13 @@ public class FileSelector extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Verifies if the text file is correct, if true then calls Menu GUI with
-     * the graph board
+     * Verifies if the summary text file is correct, if true then calls Menu GUI
      *
      * @param evt
      */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        boolean success = App.sendFilePath(path.getText()); // missing method
+        boolean success = App.addSummaries(path.getText().split(" "));
 
         if (success) {
             this.setVisible(false);
@@ -190,7 +189,11 @@ public class FileSelector extends javax.swing.JFrame {
     private void pathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathActionPerformed
         continueButtonActionPerformed(evt);
     }//GEN-LAST:event_pathActionPerformed
-
+    
+    /**
+     * Let the user select one or more files to initialize the app with summaries
+     * @param evt 
+     */
     private void fileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooseActionPerformed
         JFileChooser jf = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de Texto (.txt)", "txt");

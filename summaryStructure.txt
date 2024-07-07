@@ -4,7 +4,7 @@
 // Example: FirstLine.- para los -- SecondLine.- ingenieros
 //          ResultWithNoWhiteSpace.- para losingenieros / FinalResult.- para los ingenieros
 
-// NOTE-3 : Keywords and Authors must not be enumerated, but it must be separated line by line.
+// NOTE-3 : Keywords and Authors must not be enumerated, but it must be separated line by line or commas.
 // NOTE-4 : title must be one line, otherwise it will not read a second line
 
 /title

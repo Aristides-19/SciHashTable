@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * @author Jesús Duarte & Arístides Pérez
  */
 public class Summary {
+
     private String title;
     private String[] authors;
     private String body;
@@ -53,24 +54,22 @@ public class Summary {
     public void setKeyWords(String[] keyWords) {
         this.keyWords = keyWords;
     }
-    
-    /**
-    * Count how many times a key appears in a text
-    *
-    * @author Jesús Duarte & Arístides Pérez
-     * @param summary
-     * @param key
-     * @return counter
-    */
-    public int counterKey (String summary, String key){
-        Pattern pattern = Pattern.compile(key, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(summary);
 
-        int contador = 0;
+    /**
+     * Count how many times a keyWord appears in summary {@code body}
+     *
+     * @param key keyword to match
+     * @return integer representing the count
+     */
+    public int counterKey(String key) {
+        Pattern pattern = Pattern.compile(key, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(body);
+
+        int counter = 0;
         while (matcher.find()) {
-            contador++;
+            counter++;
         }
 
-        return contador;
+        return counter;
     }
 }
