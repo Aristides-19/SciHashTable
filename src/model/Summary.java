@@ -1,5 +1,8 @@
 package model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Summary template, it needs a title and body String with keyWords and authors
  * String array
@@ -51,5 +54,15 @@ public class Summary {
         this.keyWords = keyWords;
     }
     
-    
+    public int counterKey (String summary, String key){
+        Pattern pattern = Pattern.compile(key);
+        Matcher matcher = pattern.matcher(summary);
+
+        int contador = 0;
+        while (matcher.find()) {
+            contador++;
+        }
+
+        return contador;
+    }
 }
