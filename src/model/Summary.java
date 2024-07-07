@@ -63,7 +63,7 @@ public class Summary {
      * @return counter
     */
     public int counterKey (String summary, String key){
-        Pattern pattern = Pattern.compile(key);
+        Pattern pattern = Pattern.compile(key, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(summary);
 
         int contador = 0;
