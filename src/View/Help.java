@@ -3,21 +3,23 @@ package view;
 import java.awt.Frame;
 
 /**
- * Main Menu where the user can interact with the scientific summaries
+ * A help guide GUI for the user (?)
  *
  * @author Arístides Pérez
  */
-public class Menu extends javax.swing.JFrame {
-
+public class Help extends javax.swing.JFrame {
+    private final Menu menuGUI;
 
     /**
-     * Creates new form Menu
-     *
+     * Creates new form Help
+     * @param menuGUI menu user interface
      */
-    public Menu() {
+    public Help(Menu menuGUI) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.menuGUI = menuGUI;
+        this.setVisible(true);
     }
 
     /**
@@ -33,10 +35,10 @@ public class Menu extends javax.swing.JFrame {
         titleBar = new javax.swing.JPanel();
         exitButton = new javax.swing.JLabel();
         minimizeButton = new javax.swing.JLabel();
-        helpButton = new javax.swing.JLabel();
-        pathSep = new javax.swing.JSeparator();
-        pathField = new javax.swing.JTextField();
-        summaryAddButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        icon = new javax.swing.JLabel();
+        scrollText = new javax.swing.JScrollPane();
+        textInfo = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -69,24 +71,12 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        helpButton.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
-        helpButton.setForeground(new java.awt.Color(51, 51, 51));
-        helpButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        helpButton.setText("?");
-        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        helpButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                helpButtonMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout titleBarLayout = new javax.swing.GroupLayout(titleBar);
         titleBar.setLayout(titleBarLayout);
         titleBarLayout.setHorizontalGroup(
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleBarLayout.createSequentialGroup()
-                .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 556, Short.MAX_VALUE)
+                .addContainerGap(356, Short.MAX_VALUE)
                 .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -96,46 +86,45 @@ public class Menu extends javax.swing.JFrame {
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleBarLayout.createSequentialGroup()
                 .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 40));
+        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 40));
 
-        pathSep.setBackground(new java.awt.Color(255, 255, 255));
-        pathSep.setForeground(new java.awt.Color(0, 0, 0));
-        Main.add(pathSep, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 260, 20));
-
-        pathField.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        pathField.setText("Ruta del Resumen");
-        pathField.setBorder(null);
-        pathField.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setBackground(new java.awt.Color(0, 51, 153));
+        backButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        backButton.setForeground(new java.awt.Color(255, 255, 255));
+        backButton.setText("Volver al Menú");
+        backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pathFieldActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
-        pathField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                pathFieldKeyTyped(evt);
-            }
-        });
-        Main.add(pathField, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, 260, 20));
+        Main.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 520, 180, 30));
 
-        summaryAddButton.setBackground(new java.awt.Color(0, 51, 153));
-        summaryAddButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
-        summaryAddButton.setForeground(new java.awt.Color(255, 255, 255));
-        summaryAddButton.setText("Añadir Resumen");
-        summaryAddButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        summaryAddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        summaryAddButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                summaryAddButtonActionPerformed(evt);
-            }
-        });
-        Main.add(summaryAddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 260, 30));
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icon.png"))); // NOI18N
+        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+
+        scrollText.setBorder(null);
+        scrollText.setFocusable(false);
+
+        textInfo.setEditable(false);
+        textInfo.setBackground(new java.awt.Color(255, 255, 255));
+        textInfo.setColumns(20);
+        textInfo.setFont(new java.awt.Font("Consolas", 1, 13)); // NOI18N
+        textInfo.setForeground(new java.awt.Color(51, 51, 51));
+        textInfo.setLineWrap(true);
+        textInfo.setRows(5);
+        textInfo.setText("missing help");
+        textInfo.setWrapStyleWord(true);
+        textInfo.setBorder(null);
+        scrollText.setViewportView(textInfo);
+
+        Main.add(scrollText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 340, 370));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,48 +134,37 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
+        this.setVisible(false);
+        this.dispose();
+        menuGUI.setVisible(true);
+    }//GEN-LAST:event_exitButtonMouseClicked
+
     private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
         this.setState(Frame.ICONIFIED);
     }//GEN-LAST:event_minimizeButtonMouseClicked
 
-    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonMouseClicked
-
-    private void pathFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pathFieldActionPerformed
-
-    }//GEN-LAST:event_pathFieldActionPerformed
-
-    private void pathFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pathFieldKeyTyped
-        if (pathField.getText().equals("Ruta del Resumen")) {
-            pathField.setText("");
-        }
-    }//GEN-LAST:event_pathFieldKeyTyped
-
-    private void summaryAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_summaryAddButtonActionPerformed
-
-    }//GEN-LAST:event_summaryAddButtonActionPerformed
-
-    private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.setVisible(false);
-        Help helpGUI = new Help(this);
-    }//GEN-LAST:event_helpButtonMouseClicked
+        this.dispose();
+        menuGUI.setVisible(true);
+    }//GEN-LAST:event_backButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel exitButton;
-    private javax.swing.JLabel helpButton;
+    private javax.swing.JLabel icon;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JTextField pathField;
-    private javax.swing.JSeparator pathSep;
-    private javax.swing.JButton summaryAddButton;
+    private javax.swing.JScrollPane scrollText;
+    private javax.swing.JTextArea textInfo;
     private javax.swing.JPanel titleBar;
     // End of variables declaration//GEN-END:variables
-
 }

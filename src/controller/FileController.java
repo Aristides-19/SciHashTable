@@ -24,7 +24,9 @@ public class FileController {
      * It reads the summary by parts. The array returned is ordered by
      * {@code [Title 0, Authors 1, Body 2, Keywords 3]}, so authors {@code 1}
      * and keywords {@code 3} must be splited by a comma
-     * {@code String.split(",")}.
+     * {@code String.split(",")}. NOTE : It can return a {@code null} value if a
+     * element from the summary is empty, you must verify the text file or
+     * handle an exception.
      *
      * @param path path where the text file is located
      * @return an array of strings with each summary element
@@ -52,17 +54,18 @@ public class FileController {
 
                     switch (e) {
                         case State.TITLE ->
-                            title += !line.equals("") && title.equals("") && !line.equals("/title") ? line : "";
+                            title += !line.isBlank() && title.isBlank() && !line.equals("/title") ? line : "";
                         case State.AUTHORS ->
-                            authors += !line.equals("") && !line.equals("/authors") ? line + "," : "";
+                            authors += !line.isBlank() && !line.equals("/authors") ? line + "," : "";
                         case State.BODY ->
-                            body += !line.equals("") && !line.equals("/body") ? line + " " : "";
+                            body += !line.isBlank() && !line.equals("/body") ? line + " " : "";
                         case State.KEYWORDS ->
-                            keywords += !line.equals("") && !line.equals("/keywords") ? line + "," : "";
+                            keywords += !line.isBlank() && !line.equals("/keywords") ? line + "," : "";
                     }
                 }
 
-                return new String[]{title, authors, body, keywords};
+                return title.isBlank() || authors.isBlank() || body.isBlank() || keywords.isBlank() ? null
+                        : new String[]{title, authors, body, keywords};
             }
         } catch (FileNotFoundException e) {
 

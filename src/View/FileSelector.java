@@ -8,13 +8,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JOptionPane;
 
 /**
- * Launch Menu to let the user select the file with correct structure
+ * Launch Menu to let the user select summary files with correct structure
  *
  * @author Arístides Pérez
  */
 public class FileSelector extends javax.swing.JFrame {
 
-    private File chosenFile;
     private int result;
 
     /**
@@ -41,11 +40,11 @@ public class FileSelector extends javax.swing.JFrame {
         pathSep = new javax.swing.JSeparator();
         fileChoose = new javax.swing.JButton();
         continueButton = new javax.swing.JButton();
-        minimizeButton = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
         titleBar = new javax.swing.JPanel();
         helpButton = new javax.swing.JLabel();
         exitButton1 = new javax.swing.JLabel();
+        minimizeButton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -57,7 +56,7 @@ public class FileSelector extends javax.swing.JFrame {
         title.setBackground(new java.awt.Color(255, 255, 255));
         title.setFont(new java.awt.Font("Consolas", 1, 25)); // NOI18N
         title.setForeground(new java.awt.Color(51, 51, 51));
-        title.setText("¡Sube tu Archivo!");
+        title.setText("¡Sube tu Resumen!");
         Main.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 260, 70));
 
         path.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
@@ -73,56 +72,44 @@ public class FileSelector extends javax.swing.JFrame {
                 pathKeyTyped(evt);
             }
         });
-        Main.add(path, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 250, 20));
+        Main.add(path, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 170, 20));
 
         pathSep.setBackground(new java.awt.Color(255, 255, 255));
         pathSep.setForeground(new java.awt.Color(0, 0, 0));
-        Main.add(pathSep, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 280, 20));
+        Main.add(pathSep, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 210, 20));
 
-        fileChoose.setBackground(new java.awt.Color(255, 110, 66));
+        fileChoose.setBackground(new java.awt.Color(0, 51, 153));
         fileChoose.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         fileChoose.setForeground(new java.awt.Color(255, 255, 255));
         fileChoose.setText("...");
         fileChoose.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        fileChoose.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        fileChoose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         fileChoose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileChooseActionPerformed(evt);
             }
         });
-        Main.add(fileChoose, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 30, 20));
+        Main.add(fileChoose, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 30, 20));
 
-        continueButton.setBackground(new java.awt.Color(255, 110, 66));
+        continueButton.setBackground(new java.awt.Color(0, 51, 153));
         continueButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         continueButton.setForeground(new java.awt.Color(255, 255, 255));
         continueButton.setText("Continuar");
         continueButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        continueButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        continueButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         continueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 continueButtonActionPerformed(evt);
             }
         });
-        Main.add(continueButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 280, 30));
+        Main.add(continueButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 170, 30));
 
-        minimizeButton.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
-        minimizeButton.setForeground(new java.awt.Color(51, 51, 51));
-        minimizeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        minimizeButton.setText("-");
-        minimizeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                minimizeButtonMouseClicked(evt);
-            }
-        });
-        Main.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 30, 40));
-
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/images/icon.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(64, 64));
-        jLabel1.setMinimumSize(new java.awt.Dimension(64, 64));
-        jLabel1.setPreferredSize(new java.awt.Dimension(64, 64));
-        Main.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 260, 260));
+        icon.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/images/icon.png"))); // NOI18N
+        icon.setMaximumSize(new java.awt.Dimension(64, 64));
+        icon.setMinimumSize(new java.awt.Dimension(64, 64));
+        icon.setPreferredSize(new java.awt.Dimension(64, 64));
+        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 70, 80));
 
         titleBar.setBackground(new java.awt.Color(255, 255, 255));
         titleBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -131,7 +118,7 @@ public class FileSelector extends javax.swing.JFrame {
         helpButton.setForeground(new java.awt.Color(51, 51, 51));
         helpButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         helpButton.setText("?");
-        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         helpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 helpButtonMouseClicked(evt);
@@ -143,13 +130,25 @@ public class FileSelector extends javax.swing.JFrame {
         exitButton1.setForeground(new java.awt.Color(51, 51, 51));
         exitButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitButton1.setText("X");
-        exitButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        exitButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         exitButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 exitButton1MouseClicked(evt);
             }
         });
-        titleBar.add(exitButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, 40, 40));
+        titleBar.add(exitButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 40, 40));
+
+        minimizeButton.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        minimizeButton.setForeground(new java.awt.Color(51, 51, 51));
+        minimizeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeButton.setText("-");
+        minimizeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseClicked(evt);
+            }
+        });
+        titleBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 30, 40));
 
         Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 40));
 
@@ -157,11 +156,11 @@ public class FileSelector extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Main, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
         );
 
         pack();
@@ -175,7 +174,7 @@ public class FileSelector extends javax.swing.JFrame {
      */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        boolean success = App.sendFilePath(path.getText());
+        boolean success = App.sendFilePath(path.getText()); // missing method
 
         if (success) {
             this.setVisible(false);
@@ -184,7 +183,7 @@ public class FileSelector extends javax.swing.JFrame {
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo "
-                    + "no está vacío o la ruta es correcta, además de contener la estructura correcta");
+                    + "no está vacío o la ruta y la estructura sea correcta");
         }
     }//GEN-LAST:event_continueButtonActionPerformed
 
@@ -197,17 +196,23 @@ public class FileSelector extends javax.swing.JFrame {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo de Texto (.txt)", "txt");
         jf.setAcceptAllFileFilterUsed(false);
         jf.addChoosableFileFilter(filter);
+        jf.setMultiSelectionEnabled(true);
 
         result = jf.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            chosenFile = jf.getSelectedFile();
-            path.setText(chosenFile.getAbsolutePath());
+            
+            File[] chosenFiles = jf.getSelectedFiles();
+            String paths = "";
+            for (File f : chosenFiles) {
+                paths += f.getAbsolutePath() + " ";
+            }
+            path.setText(paths);
         }
     }//GEN-LAST:event_fileChooseActionPerformed
 
     private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
-        JOptionPane.showMessageDialog(this, "Las palabras que no tengan al menos "
-                + "3 letras o tengan caracteres especiales no serán tomadas en cuenta");
+        JOptionPane.showMessageDialog(this, "Recuerda verificar que tus archivos cumplan "
+                + "con la estructura dada del resumen científico ¡Puedes seleccionar más de uno!");
     }//GEN-LAST:event_helpButtonMouseClicked
 
     private void pathKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pathKeyTyped
@@ -230,7 +235,7 @@ public class FileSelector extends javax.swing.JFrame {
     private javax.swing.JLabel exitButton1;
     private javax.swing.JButton fileChoose;
     private javax.swing.JLabel helpButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel icon;
     private javax.swing.JLabel minimizeButton;
     private javax.swing.JTextField path;
     private javax.swing.JSeparator pathSep;
