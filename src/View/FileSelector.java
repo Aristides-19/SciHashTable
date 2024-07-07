@@ -1,5 +1,6 @@
 package view;
 
+import controller.App;
 import java.awt.Frame;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -174,7 +175,7 @@ public class FileSelector extends javax.swing.JFrame {
      */
     private void continueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueButtonActionPerformed
 
-        boolean success = true;
+        boolean success = App.sendFilePath(path.getText());
 
         if (success) {
             this.setVisible(false);

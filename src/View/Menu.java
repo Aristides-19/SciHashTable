@@ -1,14 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
+
+import java.awt.Frame;
+import javax.swing.JButton;
+import controller.App;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
  * @author jesus
  */
 public class Menu extends javax.swing.JFrame {
+    
+    private DefaultListModel<String> summaries = new DefaultListModel<>();
 
     /**
      * Creates new form Menu
@@ -26,24 +36,165 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        wordField = new javax.swing.JTextField();
+        wordSep = new javax.swing.JSeparator();
+        Main = new javax.swing.JPanel();
+        titleBar = new javax.swing.JPanel();
+        helpButton = new javax.swing.JLabel();
+        exitButton1 = new javax.swing.JLabel();
+        minimizeButton = new javax.swing.JLabel();
+        wordSep1 = new javax.swing.JSeparator();
+        wordField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        wordField.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        wordField.setText("Metropolitana");
+        wordField.setBorder(null);
+        wordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordFieldActionPerformed(evt);
+            }
+        });
+        wordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                wordFieldKeyTyped(evt);
+            }
+        });
+
+        wordSep.setBackground(new java.awt.Color(255, 255, 255));
+        wordSep.setForeground(new java.awt.Color(0, 0, 0));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Main.setBackground(new java.awt.Color(255, 255, 255));
+        Main.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleBar.setBackground(new java.awt.Color(255, 255, 255));
+        titleBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        helpButton.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        helpButton.setForeground(new java.awt.Color(51, 51, 51));
+        helpButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helpButton.setText("?");
+        helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        helpButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                helpButtonMouseClicked(evt);
+            }
+        });
+        titleBar.add(helpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 40, 40));
+
+        exitButton1.setFont(new java.awt.Font("sansserif", 0, 22)); // NOI18N
+        exitButton1.setForeground(new java.awt.Color(51, 51, 51));
+        exitButton1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exitButton1.setText("X");
+        exitButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        exitButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitButton1MouseClicked(evt);
+            }
+        });
+        titleBar.add(exitButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 40, 40));
+
+        minimizeButton.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        minimizeButton.setForeground(new java.awt.Color(51, 51, 51));
+        minimizeButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeButton.setText("-");
+        minimizeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        minimizeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeButtonMouseClicked(evt);
+            }
+        });
+        titleBar.add(minimizeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, 30, 40));
+
+        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 40));
+
+        wordSep1.setBackground(new java.awt.Color(255, 255, 255));
+        wordSep1.setForeground(new java.awt.Color(0, 0, 0));
+        Main.add(wordSep1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 260, 20));
+
+        wordField1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        wordField1.setText("Metropolitana");
+        wordField1.setBorder(null);
+        wordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wordField1ActionPerformed(evt);
+            }
+        });
+        wordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                wordField1KeyTyped(evt);
+            }
+        });
+        Main.add(wordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 260, 20));
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        Main.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 160, 230));
+
+        getContentPane().add(Main, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void minimizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeButtonMouseClicked
+        this.setState(Frame.ICONIFIED);
+    }//GEN-LAST:event_minimizeButtonMouseClicked
+
+    private void helpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpButtonMouseClicked
+        JOptionPane.showMessageDialog(this, "Las palabras que no tengan al menos "
+            + "3 letras o tengan caracteres especiales no serán tomadas en cuenta");
+    }//GEN-LAST:event_helpButtonMouseClicked
+
+    private void exitButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButton1MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitButton1MouseClicked
+
+    private void wordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wordFieldKeyTyped
+        if (wordField.getText().equals("Metropolitana")) {
+            wordField.setText("");
+        }
+    }//GEN-LAST:event_wordFieldKeyTyped
+
+    private void wordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordFieldActionPerformed
+        wordAddButtonActionPerformed(evt);
+    }//GEN-LAST:event_wordFieldActionPerformed
+
+    private void wordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wordField1ActionPerformed
+        wordAddButtonActionPerformed(evt);
+    }//GEN-LAST:event_wordField1ActionPerformed
+
+    private void wordField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_wordField1KeyTyped
+        if (wordField.getText().equals("Metropolitana")) {
+            wordField.setText("");
+        }
+    }//GEN-LAST:event_wordField1KeyTyped
+
+    private void wordAddButtonActionPerformed(ActionEvent evt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Main;
+    private javax.swing.JLabel exitButton1;
+    private javax.swing.JLabel helpButton;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel minimizeButton;
+    private javax.swing.JPanel titleBar;
+    private javax.swing.JTextField wordField;
+    private javax.swing.JTextField wordField1;
+    private javax.swing.JSeparator wordSep;
+    private javax.swing.JSeparator wordSep1;
     // End of variables declaration//GEN-END:variables
+
+    
 }
