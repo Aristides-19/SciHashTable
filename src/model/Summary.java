@@ -54,6 +54,14 @@ public class Summary {
         this.keyWords = keyWords;
     }
     
+    /**
+    * Count how many times a key appears in a text
+    *
+    * @author Jesús Duarte & Arístides Pérez
+     * @param summary
+     * @param key
+     * @return counter
+    */
     public int counterKey (String summary, String key){
         Pattern pattern = Pattern.compile(key);
         Matcher matcher = pattern.matcher(summary);
