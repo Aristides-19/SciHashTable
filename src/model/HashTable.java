@@ -15,6 +15,15 @@ public class HashTable<K, V> {
     private Node<K, V>[] table;
     private int buckets;
     private int size;
+    /**
+     * A rehash will ocurr when the size reachs 75% of available buckets. Just
+     * then, minimum probability of a collision won't be zero unless the buckets
+     * are reduced to 16, so there is a minimum probability that a collision can
+     * happen after first rehash that can be calculated as LOAD_FACTOR / 2.
+     * Still, to save memory it will do a reverse rehash when size is less than
+     * LOAD_FACTOR / 2. And, the maximum probability will always be below
+     * LOAD_FACTOR.
+     */
     private final float LOAD_FACTOR = 0.75F;
 
     /**
@@ -49,14 +58,19 @@ public class HashTable<K, V> {
      * @see #get(K)
      */
     public void put(K key, V value) {
-        put(key, value, 0);
+        if (!put(key, value, 0)) {
+            size++;
+        }
+
+        if ((float) size / buckets == LOAD_FACTOR) {
+            rehash(false);
+        }
     }
 
     /**
-     * Just a {@code put} public method util. It's used when it's performing a
-     * rehashing. Also, return value doesn't mean anything, it's just useful
-     * when there is a key that has already been hashed to not increase the
-     * size.
+     * Just a {@code put public method} util. It's used when it's performing a
+     * rehashing. Also, return value it's just useful when there is a key that
+     * has already been hashed to not increase the size.
      *
      * @param key key to insert
      * @param value value to insert
@@ -102,19 +116,13 @@ public class HashTable<K, V> {
             table[index] = new Node<>(key, value, hash);
         }
 
-        size++;
-
-        if ((float) size / buckets == LOAD_FACTOR) {
-            rehash();
-        }
-
         return false;
     }
 
     /**
      * Get a value from a given key if it's hashed, otherwise it will return
      * {@code null}. There is a possibility that the key is already hashed, but
-     * its value pair is {@code null}.
+     * its value pair is {@code null}. Complexity O(1)
      *
      * @param key key to get value pair
      * @return value from key-value pair, if it isn't hashed returns
@@ -141,16 +149,14 @@ public class HashTable<K, V> {
     }
 
     /**
-     * Remove a value from a given if it's hashed, otherwise it will return
-     * {@code null}. It can return null even if the key is hashed but it's value
-     * pair is {@code null}
+     * Remove a value from a given if it's hashed. Complexity O(1) unless it
+     * performs a rehashing, would be O(n).
      *
      * @param key key to remove key-value pair
      * @throws NullPointerException if key is {@code null}
-     * @return value from removed key
      * @see #put(K, V)
      */
-    public V remove(K key) {
+    public void remove(K key) {
         if (key == null) {
             throw new NullPointerException("Key cannot be a null value");
         }
@@ -161,7 +167,6 @@ public class HashTable<K, V> {
         // FIRST CASE
         if (node != null && node.getKey().equals(key)) {
             table[index] = node.getNext();
-            return node.getValue();
         }
 
         // ELSE CASE
@@ -171,7 +176,7 @@ public class HashTable<K, V> {
             while (node != null) {
                 if (node.getKey().equals(key)) {
                     prev.setNext(node.getNext());
-                    return node.getValue();
+                    break;
                 }
 
                 prev = node;
@@ -179,13 +184,18 @@ public class HashTable<K, V> {
             }
         }
 
-        return null;
+        size--;
+        if (buckets > 16) {
+            if ((float) size / buckets < LOAD_FACTOR / 2) {
+                rehash(true);
+            }
+        }
     }
 
     /**
      * This implementation uses the FNV-1 hashing algorithm with 32 bits. It
-     * uses key object     * toString method, then is converted to its byte-per-byte representation (8
-     * bits), instead of using 16 bits char. Complexity O(n)
+     * uses key object * toString method, then is converted to its byte-per-byte
+     * representation (8 bits), instead of using 16 bits char. Complexity O(n)
      *
      * @param key object to hash
      * @return key object hashCode
@@ -200,7 +210,7 @@ public class HashTable<K, V> {
             hash ^= b; // XOR to increase dispersion
         }
 
-        return hash;
+        return hash < 0 ? hash * -1 : hash;
     }
 
     /**
@@ -209,8 +219,8 @@ public class HashTable<K, V> {
      * complexity, but in most cases there are just few collisions, so it will
      * be O(n) complexity.
      */
-    private void rehash() {
-        buckets *= 2;
+    private void rehash(boolean reverse) {
+        buckets = reverse ? buckets / 2 : buckets * 2;
         Node<K, V>[] oldTable = table;
         table = new Node[buckets];
 
@@ -248,6 +258,61 @@ public class HashTable<K, V> {
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    /**
+     * Generates an array of hashed keys.
+     *
+     * @return array of hashed keys
+     */
+    public K[] keysToArray() {
+        K[] keys = (K[]) new Object[size];
+        int i = 0;
+        for (var e : table) {
+            while (e != null) {
+                keys[i] = e.getKey();
+                e = e.getNext();
+                i++;
+            }
+        }
+        return keys;
+    }
+
+    /**
+     * Generates an array of values from key-value pairs.
+     *
+     * @return array of values from key-value pairs
+     */
+    public V[] valuesToArray() {
+        V[] values = (V[]) new Object[size];
+        int i = 0;
+        for (var e : table) {
+            while (e != null) {
+                values[i] = e.getValue();
+                e = e.getNext();
+                i++;
+            }
+        }
+        return values;
+    }
+
+    /**
+     * A String representation of the Hash Table, it shows a key-value pair line
+     * by line.
+     *
+     * @return a string representing table
+     */
+    @Override
+    public String toString() {
+        String toReturn = "";
+        for (var e : table) {
+            while (e != null) {
+                toReturn += e.getKey().toString() + " : "
+                        + e.getValue().toString() + "\n";
+                e = e.getNext();
+            }
+        }
+        return toReturn;
     }
 
 }
