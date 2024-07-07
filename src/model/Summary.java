@@ -72,4 +72,20 @@ public class Summary {
 
         return counter;
     }
+
+    @Override
+    public String toString() {
+        String toReturn = "TÍTULO : " + title + "\n" + "AUTORES : ";
+
+        for (String a : authors) {
+            toReturn += !a.equals(authors[authors.length - 1]) ? a + ", " : a;
+        }
+        toReturn += "\nCUERPO :\n" + body + "\nPALABRAS CLAVES :\n";
+
+        for (String k : keyWords) {
+            int matches = counterKey(k);
+            toReturn += k + " : " + matches + "\n";
+        }
+        return toReturn;
+    }
 }
