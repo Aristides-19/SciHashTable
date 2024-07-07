@@ -27,8 +27,9 @@ public class App {
     /**
      * Let the user to add one or more summaries from text files. It doesn't
      * throw any exception but a {@code false} value means that a summary wasn't
-     * added. So, it lets the {@code view} throw an exception or not. NOTE :
-     * It'll return false if just one summary wasn't added.
+     * added, and when a summary is added, it can't be replaced. So, it lets the
+     * {@code view} throw an exception or not. NOTE : It'll return false if just
+     * one summary wasn't added.
      *
      * @param paths an array of paths
      * @return true if every summary was added succesfully, false otherwise
