@@ -194,7 +194,7 @@ public class HashTable<K, V> {
 
     /**
      * This implementation uses the FNV-1 hashing algorithm with 32 bits. It
-     * uses key object * toString method, then is converted to its byte-per-byte
+     * uses key object toString method, then is converted to its byte-per-byte
      * representation (8 bits), instead of using 16 bits char. Complexity O(n)
      *
      * @param key object to hash
