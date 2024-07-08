@@ -3,7 +3,7 @@ package view;
 import java.awt.Frame;
 
 /**
- * Shows a Summary Analysis (?)
+ * Shows a Summary Analysis
  *
  * @author Arístides Pérez
  */
@@ -11,7 +11,8 @@ public class SummaryAnalysis extends javax.swing.JFrame {
     private final Menu menuGUI;
 
     /**
-     * Creates new form Help
+     * Creates new form Analysis
+     *
      * @param menuGUI menu user interface
      */
     public SummaryAnalysis(Menu menuGUI, String analysis) {

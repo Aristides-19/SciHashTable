@@ -94,12 +94,57 @@ public class App {
     }
 
     /**
+     * Get related summaries to an author or keyword specified by choice
+     *
+     * @param element author or keyword to get summaries
+     * @param choice 0 = keywords, 1 = authors
+     * @return an array of String of summaries titles
+     */
+    public static String[] getRelatedSummaries(String element, int choice) {
+        String[] titles;
+        if (choice == 0) {
+            titles = new String[keyWords.get(element).size()];
+            int i = 0;
+            for (Summary s : keyWords.get(element)) {
+                titles[i] = s.getTitle();
+                i++;
+            }
+        } else {
+            titles = new String[authors.get(element).size()];
+            int i = 0;
+            for (Summary s : authors.get(element)) {
+                titles[i] = s.getTitle();
+                i++;
+            }
+        }
+        return titles;
+    }
+
+    /**
      * Get the HashTable of Summaries
      *
      * @return hashtable {@code String-Summary} pair
      */
     public static HashTable<String, Summary> getSummaries() {
         return summaries;
+    }
+
+    /**
+     * Get the HashTable of KeyWord
+     *
+     * @return hashtable {@code Keyword-Related Summaries} pair
+     */
+    public static HashTable<String, LinkedList<Summary>> getKeyWords() {
+        return keyWords;
+    }
+
+    /**
+     * Get the HashTable of authors
+     *
+     * @return hashtable {@code authors-Writed Summaries} pair
+     */
+    public static HashTable<String, LinkedList<Summary>> getAuthors() {
+        return authors;
     }
 
 }

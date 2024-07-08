@@ -1,25 +1,55 @@
 package view;
 
+import controller.App;
 import java.awt.Frame;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import model.HashTable;
 
 /**
- * A help guide GUI for the user (?)
+ * Let the user choose a summary
  *
  * @author Arístides Pérez
  */
-public class Help extends javax.swing.JFrame {
+public class SelectSummary extends javax.swing.JFrame {
+
     private final Menu menuGUI;
+    private final HashTable summariesTable;
+    private final DefaultListModel<String> summariesModel = new DefaultListModel<>();
 
     /**
      * Creates new form Help
+     *
      * @param menuGUI menu user interface
+     * @param element author or key to show summaries
+     * @param summaryTable title-summary pair HashTable
+     * @param choice 0 keywords, 1 authors
      */
-    public Help(Menu menuGUI) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
+    public SelectSummary(Menu menuGUI, HashTable summaryTable, String element, int choice) {
         this.menuGUI = menuGUI;
-        this.setVisible(true);
+        this.summariesTable = summaryTable;
+        try {
+            initComponents();
+            this.setLocationRelativeTo(null);
+            this.setResizable(false);
+
+            // Summaries View Initialization
+            for (var s : App.getRelatedSummaries(element, choice)) {
+                summariesModel.addElement(s);
+            }
+            summariesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            summariesList.setSelectedIndex(0);
+            menuGUI.setVisible(false);
+            this.setVisible(true);
+        } catch (Exception e) {
+            this.setVisible(false);
+            this.dispose();
+            menuGUI.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error verifica tu selección y vuelve a intentarlo. "
+                    + "Si estás buscando por palabra clave, puede que la palabra no exista en ningún resumen.");
+        }
+
     }
 
     /**
@@ -37,8 +67,9 @@ public class Help extends javax.swing.JFrame {
         minimizeButton = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
         icon = new javax.swing.JLabel();
-        scrollText = new javax.swing.JScrollPane();
-        textInfo = new javax.swing.JTextArea();
+        scrollAuthors = new javax.swing.JScrollPane();
+        summariesList = new javax.swing.JList<>();
+        selectButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -76,7 +107,7 @@ public class Help extends javax.swing.JFrame {
         titleBarLayout.setHorizontalGroup(
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleBarLayout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
+                .addContainerGap(246, Short.MAX_VALUE)
                 .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -91,12 +122,12 @@ public class Help extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 40));
+        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 40));
 
         backButton.setBackground(new java.awt.Color(0, 51, 153));
         backButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         backButton.setForeground(new java.awt.Color(255, 255, 255));
-        backButton.setText("Volver al Menú");
+        backButton.setText("Volver");
         backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -104,27 +135,28 @@ public class Help extends javax.swing.JFrame {
                 backButtonActionPerformed(evt);
             }
         });
-        Main.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 520, 180, 30));
+        Main.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 80, 30));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icon.png"))); // NOI18N
-        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, -1, -1));
 
-        scrollText.setBorder(null);
-        scrollText.setFocusable(false);
+        summariesList.setModel(summariesModel);
+        scrollAuthors.setViewportView(summariesList);
 
-        textInfo.setEditable(false);
-        textInfo.setBackground(new java.awt.Color(255, 255, 255));
-        textInfo.setColumns(20);
-        textInfo.setFont(new java.awt.Font("Consolas", 1, 13)); // NOI18N
-        textInfo.setForeground(new java.awt.Color(51, 51, 51));
-        textInfo.setLineWrap(true);
-        textInfo.setRows(5);
-        textInfo.setText("Este programa está diseñado para almacenar resumenes científicos mediante el uso de HashTable, solamente con fines didácticos.\n\n1. Analizar Resumen: selecciona un resumen de la lista y luego presiona el botón, se mostrarán los autores, el cuerpo y las palabras claves del resumen.\n\n2. Buscar por Autor o Palabras Claves: se selecciona un autor o se escribe una palabra clave, luego se desplegará una lista de los resumenes relacionados, donde se podrá seleccionar un resumen para analizarlo.\n\n3. Subir Resumen: al igual que el menú principal, permite subir un resumen contenido en un archivo de texto, este debe cumplir con la estructura propuesta para un resumen.\n\n- Arístides Pérez & Jesús Duarte.");
-        textInfo.setWrapStyleWord(true);
-        textInfo.setBorder(null);
-        scrollText.setViewportView(textInfo);
+        Main.add(scrollAuthors, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 260, 200));
 
-        Main.add(scrollText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 340, 370));
+        selectButton.setBackground(new java.awt.Color(0, 51, 153));
+        selectButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        selectButton.setForeground(new java.awt.Color(255, 255, 255));
+        selectButton.setText("Seleccionar");
+        selectButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        selectButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        selectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectButtonActionPerformed(evt);
+            }
+        });
+        Main.add(selectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 160, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,7 +166,7 @@ public class Help extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+            .addComponent(Main, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
 
         pack();
@@ -156,6 +188,23 @@ public class Help extends javax.swing.JFrame {
         menuGUI.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
+        String selectedElement = summariesList.getSelectedValue();
+        Object summ = summariesTable.get(selectedElement);
+
+        if (summ != null) {
+            this.setVisible(false);
+            this.dispose();
+            SummaryAnalysis analysisGUI = new SummaryAnalysis(menuGUI, summ.toString());
+        } else {
+            this.setVisible(false);
+            this.dispose();
+            menuGUI.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error verifica tu selección y vuelve a intentarlo. "
+                    + "Si estás buscando por palabra clave, puede que la palabra no exista en ningún resumen.");
+        }
+    }//GEN-LAST:event_selectButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
@@ -163,8 +212,9 @@ public class Help extends javax.swing.JFrame {
     private javax.swing.JLabel exitButton;
     private javax.swing.JLabel icon;
     private javax.swing.JLabel minimizeButton;
-    private javax.swing.JScrollPane scrollText;
-    private javax.swing.JTextArea textInfo;
+    private javax.swing.JScrollPane scrollAuthors;
+    private javax.swing.JButton selectButton;
+    private javax.swing.JList<String> summariesList;
     private javax.swing.JPanel titleBar;
     // End of variables declaration//GEN-END:variables
 }

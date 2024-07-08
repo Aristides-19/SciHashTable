@@ -2,7 +2,6 @@ package view;
 
 import controller.App;
 import java.awt.Frame;
-import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -122,13 +121,11 @@ public class Menu extends javax.swing.JFrame {
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleBarLayout.createSequentialGroup()
                 .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(titleBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 40));
@@ -296,11 +293,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_helpButtonMouseClicked
 
     private void keyWordSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyWordSearchButtonActionPerformed
-
+        String word = keyWordField.getText();
+        SelectSummary analysisGUI = new SelectSummary(this, App.getSummaries(), word, 0);
     }//GEN-LAST:event_keyWordSearchButtonActionPerformed
 
     private void keyWordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyWordFieldActionPerformed
-
+        keyWordSearchButtonActionPerformed(evt);
     }//GEN-LAST:event_keyWordFieldActionPerformed
 
     private void keyWordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyWordFieldKeyTyped
@@ -310,7 +308,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_keyWordFieldKeyTyped
 
     private void authorSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorSearchButtonActionPerformed
-
+        this.setVisible(false);
+        AuthorsView searchGUI = new AuthorsView(this, App.getAuthors());
     }//GEN-LAST:event_authorSearchButtonActionPerformed
 
     private void analizeSummaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizeSummaryButtonActionPerformed
