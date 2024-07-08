@@ -181,7 +181,7 @@ public class FileSelector extends javax.swing.JFrame {
             mainMenu.setVisible(true);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Error: verifica que tu archivo "
+            JOptionPane.showMessageDialog(this, "Error: verifica que todos tus archivos "
                     + "no está vacío o la ruta y la estructura sea correcta");
         }
     }//GEN-LAST:event_continueButtonActionPerformed

@@ -8,6 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import model.Summary;
 
 /**
  * Main Menu where the user can interact with the scientific summaries
@@ -313,7 +314,15 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_authorSearchButtonActionPerformed
 
     private void analizeSummaryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizeSummaryButtonActionPerformed
-
+        String title = summariesTitleList.getSelectedValue();
+        Summary summ = App.getSummaries().get(title);
+        
+        if (summ != null) {
+            this.setVisible(false);
+            SummaryAnalysis analysisGUI = new SummaryAnalysis(this, summ.toString());
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error, vuelve a intentarlo");
+        }
     }//GEN-LAST:event_analizeSummaryButtonActionPerformed
 
     private void fileChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooseActionPerformed
