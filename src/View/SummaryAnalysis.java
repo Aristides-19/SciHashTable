@@ -77,7 +77,7 @@ public class SummaryAnalysis extends javax.swing.JFrame {
         titleBarLayout.setHorizontalGroup(
             titleBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titleBarLayout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
+                .addContainerGap(506, Short.MAX_VALUE)
                 .addComponent(minimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,7 +92,7 @@ public class SummaryAnalysis extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 40));
+        Main.add(titleBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 40));
 
         backButton.setBackground(new java.awt.Color(0, 51, 153));
         backButton.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
@@ -105,10 +105,10 @@ public class SummaryAnalysis extends javax.swing.JFrame {
                 backButtonActionPerformed(evt);
             }
         });
-        Main.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 520, 180, 30));
+        Main.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, 180, 30));
 
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/icon.png"))); // NOI18N
-        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+        Main.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, -1, -1));
 
         scrollText.setBorder(null);
         scrollText.setFocusable(false);
@@ -125,7 +125,7 @@ public class SummaryAnalysis extends javax.swing.JFrame {
         textInfo.setBorder(null);
         scrollText.setViewportView(textInfo);
 
-        Main.add(scrollText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 340, 370));
+        Main.add(scrollText, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 480, 370));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
