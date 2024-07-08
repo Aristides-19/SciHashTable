@@ -6,7 +6,7 @@ import model.HashTable;
 import model.Summary;
 
 /**
- * App class contains Main method && search methods.
+ * App class contains Main method & search methods.
  *
  * @author Arístides Pérez & Jesús Duarte
  */

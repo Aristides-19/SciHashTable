@@ -8,7 +8,7 @@ package model;
  * @param <K> key datatype
  * @param <V> value datatype
  */
-class Node<K, V> {
+public class Node<K, V> {
     private K key;
     private V value;
     private Node<K, V> next;

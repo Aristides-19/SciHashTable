@@ -73,6 +73,12 @@ public class Summary {
         return counter;
     }
 
+    /**
+     * Get a Summary Analysis, it shows how many times every keyword appear in
+     * body
+     *
+     * @return String representation
+     */
     @Override
     public String toString() {
         String toReturn = "**TÍTULO : " + title + "\n" + "**AUTORES : ";
